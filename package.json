@@ -1,0 +1,29 @@
+{
+	"name": "smartnode",
+	"version": "1.0.0",
+	"description": "smartsensor",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dragonaeve/smartnode.git"
+	},
+	"keywords": [
+		"sjsu",
+		"cmpe281"
+	],
+	"author": "Anna Chow",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.16.4",
+		"mongoose": "^5.3.7",
+		"path": "^0.12.7",
+		"pug": "^2.0.3"
+	},
+	"bugs": {
+		"url": "https://github.com/dragonaeve/smartnode/issues"
+	},
+	"homepage": "https://github.com/dragonaeve/smartnode#readme"
+}
