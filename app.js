@@ -9,6 +9,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Sensor = require('./models/SensorModel'),
   Node = require('./models/NodeModel');
+  Data = require('./models/DataModel');
   mongoose.connect('mongodb://localhost:27017/app');
 //view-engine setup
 app.set('views', path.join(__dirname, 'public', 'views'));
