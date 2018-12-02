@@ -10,7 +10,8 @@ var express = require('express'),
   Sensor = require('./models/SensorModel'),
   Node = require('./models/NodeModel');
   Data = require('./models/DataModel');
-  mongoose.connect('mongodb://localhost:27017/app');
+
+  mongoose.connect('mongodb+srv://admin:admin@annachow-hjvei.mongodb.net/test?retryWrites=true');
 //view-engine setup
 app.set('views', path.join(__dirname, 'public', 'views'));
 app.set('view engine', 'pug');

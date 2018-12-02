@@ -36,8 +36,8 @@ function convertStatus(num){
 	}
 }
 //simulate invertal
-var simulate = setInterval(changeAllStats, 10000);
-var sendsim = setInterval(sendData, 10000);
+var simulate = setInterval(changeAllStats, 30000);
+var sendsim = setInterval(sendData, 30000);
 //change all sensor simulation stats
 function changeAllStats(){
 	Sensor.find({}, function(err, sensors) {
