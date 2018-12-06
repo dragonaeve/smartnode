@@ -36,8 +36,8 @@ function convertStatus(num){
 	}
 }
 //simulate invertal
-var simulate = setInterval(changeAllStats, 30000);
-var sendsim = setInterval(sendData, 30000);
+var simulate = setInterval(changeAllStats, 60000);
+var sendsim = setInterval(sendData, 60000);
 //change all sensor simulation stats
 function changeAllStats(){
 	Sensor.find({}, function(err, sensors) {
@@ -63,8 +63,9 @@ function changeStats(sName){
 		var min = type[1];
 		var max = type[2];
 
-		var time = Date(Date.now());
-		var stat = Math.floor(Math.random() * 5);
+		var time = new Date();
+		time.setDate(time.getDate());
+		var stat = 1;
 		var val = Math.floor(Math.random() * (max - min) ) + min;
 		if (stat != 1){
 			val = 0;
@@ -73,7 +74,8 @@ function changeStats(sName){
 			statistics: [{
 				timestamp: time,
 				status: stat,
-				value: val
+				value: val,
+				dataType: type[0]
 			}]
 		}, function (err, sensor) {
 			if (err) {
@@ -313,5 +315,67 @@ module.exports.get_all_data = function(req, res, next) {
 				}
 			});
 		}
+	});
+};
+
+module.exports.get_editsensor = function(req,res){
+	Sensor.findOne({sensorName: req.params.sensorName}, function(err, sensor) {
+		if (err) {
+						console.log('GET Error: There was a problem retrieving: ' + err);
+				} else {
+						//Return the incident
+						console.log('GET Retrieving Sensor: ' + sensor.sensorName);
+						//format the date properly for the value to show correctly in our edit form
+						res.format({
+								//HTML response will render the 'edit.jade' template
+								html: function(){
+											 res.render('editsensor', {
+													title: 'Sensor' + sensor.sensorName,
+													"sensor" : sensor
+											});
+								 },
+								 //JSON response will return the JSON output
+								json: function(){
+											 res.json(sensor);
+								 }
+						});
+				}
+		});
+};
+
+module.exports.update_sensor = function(req,res){
+	var sensorName = req.body.sensorName;
+	var sensorType = req.body.sensorType;
+	var status = req.body.status;
+
+	Sensor.findOne({sensorName: req.params.sensorName}, function(err, sensor) {
+		var type = sensor.sensorType;
+		var time = new Date();
+		time.setDate(time.getDate());
+		var val = sensor.statistics[0].value;
+		sensor.update({
+			sensorName:sensorName,
+			sensorType:sensorType,
+			statistics: [{
+				timestamp: time,
+				status:status,
+				value: val,
+				dataType:type
+			}]
+		}, function(err,sensorName){
+			if(err){
+				res.send("There was a problem updating" + sensorName + err);
+			} else {
+				res.format({
+					html: function(){
+						res.redirect('/sensors');
+					},
+					//JSON responds showing the updated values
+					json: function(){
+						res.json(incident);
+					}
+				});
+			}
+		});
 	});
 };
